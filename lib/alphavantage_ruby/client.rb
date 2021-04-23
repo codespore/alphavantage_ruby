@@ -36,7 +36,7 @@ module AlphavantageRuby
 
       # Because for some reason, calling search returns keys like "1. symbol"
       def sanitize_key(key)
-        key.to_s.scan(/\w*/).reject(&:empty?).last
+        key.to_s.gsub(/\s+/, "").scan(/\w*/).reject(&:empty?).last
       end
     end
 
