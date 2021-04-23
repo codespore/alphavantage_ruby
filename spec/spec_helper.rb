@@ -11,4 +11,8 @@ RSpec.configure do |config|
   config.expect_with :rspec do |c|
     c.syntax = :expect
   end
+
+  # Disable the need to prefix `describe` with `RSpec.`
+  # https://relishapp.com/rspec/rspec-core/v/3-0/docs/configuration/global-namespace-dsl
+  config.expose_dsl_globally = true
 end
