@@ -22,8 +22,22 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+The library needs to be configured with your account's api key which you can obtain from https://www.alphavantage.co/support/#api-key.
+Set the `AlphavantageRuby.configuration.api_key` to its value. If you are using Rails, you can configure this in an initializer.
 
+```
+require 'alphavantage_ruby'
+AlphavantageRuby.configure do |config|
+    config.api_key = 'your-api-key'
+end
+```
+### Accessing Time Series
+
+```
+AlphavantageRuby::TimeSeries.search(keywords: 'Tesla')
+stock = AlphavantageRuby.new(symbol: 'TSLA')
+stock.quote
+```
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
