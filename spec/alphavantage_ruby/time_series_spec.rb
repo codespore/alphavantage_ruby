@@ -156,4 +156,64 @@ describe AlphavantageRuby::TimeSeries do
       end
     end
   end
+
+  describe '#daily' do
+    subject { described_class.new(symbol: 'TSLA').daily }
+    before do
+      stub_request(:get, "https://www.alphavantage.co/query?apikey=someKey&datatype=json&function=TIME_SERIES_DAILY&outputsize=compact&symbol=TSLA").
+        to_return(status: 200, body: file_fixture("daily.json"), headers: {})
+    end
+    
+    it 'returns meta data' do
+      byebug
+      expect(subject.meta_data).to have_attributes({ 
+        information: "Daily Prices (open, high, low, close) and Volumes",
+        last_refreshed: "2021-04-23",
+        symbol: "TSLA",
+        output_size: "Compact",
+        time_zone: "US/Eastern"
+      })
+    end
+
+    it 'returns daily time series' do
+      expect(subject.daily_time_series["2021-04-23"]).to have_attributes({
+        close: "729.4000",
+        high: "737.3600",
+        low: "715.4600",
+        volume: "27703323"
+      })
+      expect(subject.daily_time_series["2021-04-23"].open).to eq("719.8000")
+    end
+
+    context 'when adjusted' do
+      subject { described_class.new(symbol: 'TSLA').daily(adjusted: true) }
+      before do
+        stub_request(:get, "https://www.alphavantage.co/query?apikey=someKey&datatype=json&function=TIME_SERIES_DAILY_ADJUSTED&outputsize=compact&symbol=TSLA").
+          to_return(status: 200, body: file_fixture("daily_adjusted.json"), headers: {})
+      end
+
+      it 'returns meta data' do
+        expect(subject.meta_data).to have_attributes({ 
+          information: "Daily Time Series with Splits and Dividend Events",
+          last_refreshed: "2021-04-23",
+          symbol: "TSLA",
+          output_size: "Compact",
+          time_zone: "US/Eastern"
+        })
+      end
+
+      it 'returns daily adjusted time series' do
+        expect(subject.daily_adjusted_time_series["2021-04-23"]).to have_attributes({
+          close: "729.4",
+          high: "737.36",
+          low: "715.46",
+          volume: "27703323",
+          adjustedclose: "729.4",
+          dividendamount: "0.0000",
+          split_coefficient: "1.0"
+        })
+        expect(subject.daily_adjusted_time_series["2021-04-23"].open).to eq("719.8")
+      end
+    end
+  end
 end

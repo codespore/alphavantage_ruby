@@ -7,7 +7,9 @@ module AlphavantageRuby
       monthly: 'TIME_SERIES_MONTHLY',
       monthly_adjusted: 'TIME_SERIES_MONTHLY_ADJUSTED',
       weekly: 'TIME_SERIES_WEEKLY',
-      weekly_adjusted: 'TIME_SERIES_WEEKLY_ADJUSTED'
+      weekly_adjusted: 'TIME_SERIES_WEEKLY_ADJUSTED',
+      daily: 'TIME_SERIES_DAILY',
+      daily_adjusted: 'TIME_SERIES_DAILY_ADJUSTED'
     }
 
     def self.search(keywords:)
@@ -30,6 +32,12 @@ module AlphavantageRuby
     def weekly(adjusted: false)
       function = adjusted ? FUNCTIONS[:weekly_adjusted] : FUNCTIONS[__method__]
       Client.get(params: { function: function, symbol: @symbol })
+    end
+
+    # `outputsize` can be either :compact (default) or :full
+    def daily(adjusted: false, outputsize: :compact)
+      function = adjusted ? FUNCTIONS[:daily_adjusted] : FUNCTIONS[__method__]
+      Client.get(params: { function: function, symbol: @symbol, outputsize: outputsize })
     end
 
   end
