@@ -5,7 +5,9 @@ module AlphavantageRuby
       search: 'SYMBOL_SEARCH',
       quote: 'GLOBAL_QUOTES',
       monthly: 'TIME_SERIES_MONTHLY',
-      monthly_adjusted: 'TIME_SERIES_MONTHLY_ADJUSTED'
+      monthly_adjusted: 'TIME_SERIES_MONTHLY_ADJUSTED',
+      weekly: 'TIME_SERIES_WEEKLY',
+      weekly_adjusted: 'TIME_SERIES_WEEKLY_ADJUSTED'
     }
 
     def self.search(keywords:)
@@ -22,6 +24,11 @@ module AlphavantageRuby
 
     def monthly(adjusted: false)
       function = adjusted ? FUNCTIONS[:monthly_adjusted] : FUNCTIONS[__method__]
+      Client.get(params: { function: function, symbol: @symbol })
+    end
+
+    def weekly(adjusted: false)
+      function = adjusted ? FUNCTIONS[:weekly_adjusted] : FUNCTIONS[__method__]
       Client.get(params: { function: function, symbol: @symbol })
     end
 

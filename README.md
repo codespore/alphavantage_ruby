@@ -37,9 +37,10 @@ AlphavantageRuby::TimeSeries.search(keywords: 'Tesla')
 
 stock_timeseries = AlphavantageRuby.new(symbol: 'TSLA')
 stock_timeseries.quote
-
 stock_timeseries.monthly
 stock_timeseries.monthly(adjusted: true)
+stock_timeseries.weekly
+stock_timeseries.weekly(adjusted: true)
 ```
 ## Development
 

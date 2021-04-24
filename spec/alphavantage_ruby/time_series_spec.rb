@@ -92,9 +92,67 @@ describe AlphavantageRuby::TimeSeries do
           close: "729.4000",
           high: "780.7900",
           low: "659.4200",
-          volume: "525522527"
+          volume: "525522527",
+          adjustedclose: "729.4000",
+          dividendamount: "0.0000"
         })
         expect(subject.monthly_adjusted_time_series["2021-04-23"].open).to eq("688.3700")
+      end
+    end
+  end
+
+  describe '#weekly' do
+    subject { described_class.new(symbol: 'TSLA').weekly }
+    before do
+      stub_request(:get, "https://www.alphavantage.co/query?apikey=someKey&datatype=json&function=TIME_SERIES_WEEKLY&symbol=TSLA").
+        to_return(status: 200, body: file_fixture("weekly.json"), headers: {})
+    end
+    
+    it 'returns meta data' do
+      expect(subject.meta_data).to have_attributes({ 
+        information: "Weekly Prices (open, high, low, close) and Volumes",
+        last_refreshed: "2021-04-23",
+        symbol: "TSLA",
+        time_zone: "US/Eastern"
+      })
+    end
+
+    it 'returns weekly time series' do
+      expect(subject.weekly_time_series["2021-04-23"]).to have_attributes({
+        close: "729.4000",
+        high: "753.7700",
+        low: "691.8001",
+        volume: "169804356"
+      })
+      expect(subject.weekly_time_series["2021-04-23"].open).to eq("719.6000")
+    end
+
+    context 'when adjusted' do
+      subject { described_class.new(symbol: 'TSLA').weekly(adjusted: true) }
+      before do
+        stub_request(:get, "https://www.alphavantage.co/query?apikey=someKey&datatype=json&function=TIME_SERIES_WEEKLY_ADJUSTED&symbol=TSLA").
+          to_return(status: 200, body: file_fixture("weekly_adjusted.json"), headers: {})
+      end
+
+      it 'returns meta data' do
+        expect(subject.meta_data).to have_attributes({ 
+          information: "Weekly Adjusted Prices and Volumes",
+          last_refreshed: "2021-04-23",
+          symbol: "TSLA",
+          time_zone: "US/Eastern"
+        })
+      end
+
+      it 'returns weekly adjusted time series' do
+        expect(subject.weekly_adjusted_time_series["2021-04-23"]).to have_attributes({
+          close: "729.4000",
+          high: "753.7700",
+          low: "691.8001",
+          volume: "169804356",
+          adjustedclose: "729.4000",
+          dividendamount: "0.0000"
+        })
+        expect(subject.weekly_adjusted_time_series["2021-04-23"].open).to eq("719.6000")
       end
     end
   end
