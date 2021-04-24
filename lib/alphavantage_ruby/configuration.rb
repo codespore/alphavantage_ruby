@@ -1,5 +1,4 @@
 module AlphavantageRuby
-
   class << self
     def configuration
       @configuration ||= Configuration.new
