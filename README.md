@@ -34,8 +34,7 @@ end
 
 ```
 AlphavantageRuby::TimeSeries.search(keywords: 'Tesla')
-
-stock_timeseries = AlphavantageRuby.new(symbol: 'TSLA')
+stock_timeseries = AlphavantageRuby::TimeSeries.new(symbol: 'TSLA')
 stock_timeseries.quote
 stock_timeseries.monthly
 stock_timeseries.monthly(adjusted: true)
@@ -43,6 +42,17 @@ stock_timeseries.weekly
 stock_timeseries.weekly(adjusted: true)
 stock_timeseries.daily(outputsize: 'compact')
 stock_timeseries.daily(adjusted: true, outputsize: 'full')
+stock_timeseries.intraday(adjusted: true, outputsize: 'compact', interval: '5min')
+```
+
+### Accessing Fundamental Data
+```
+company = AlphavantageRuby::Fundamental.new(symbol: 'TSLA')
+company.overview
+company.earnings
+company.income_statement
+company.balance_sheet
+company.cash_flow
 ```
 ## Development
 
