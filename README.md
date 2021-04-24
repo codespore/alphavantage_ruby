@@ -41,6 +41,8 @@ stock_timeseries.monthly
 stock_timeseries.monthly(adjusted: true)
 stock_timeseries.weekly
 stock_timeseries.weekly(adjusted: true)
+stock_timeseries.daily(outputsize: 'compact')
+stock_timeseries.daily(adjusted: true, outputsize: 'full')
 ```
 ## Development
 

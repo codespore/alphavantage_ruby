@@ -165,7 +165,6 @@ describe AlphavantageRuby::TimeSeries do
     end
     
     it 'returns meta data' do
-      byebug
       expect(subject.meta_data).to have_attributes({ 
         information: "Daily Prices (open, high, low, close) and Volumes",
         last_refreshed: "2021-04-23",
@@ -176,13 +175,20 @@ describe AlphavantageRuby::TimeSeries do
     end
 
     it 'returns daily time series' do
-      expect(subject.daily_time_series["2021-04-23"]).to have_attributes({
+      expect(subject.time_series_daily["2021-04-23"]).to have_attributes({
         close: "729.4000",
         high: "737.3600",
         low: "715.4600",
         volume: "27703323"
       })
-      expect(subject.daily_time_series["2021-04-23"].open).to eq("719.8000")
+      expect(subject.time_series_daily["2021-04-23"].open).to eq("719.8000")
+    end
+
+    context 'when invalid outputsize given' do
+      subject { described_class.new(symbol: 'TSLA').daily(outputsize: 'invalid') }
+      it 'should raise error' do
+        expect { subject }.to raise_error(AlphavantageRuby::Error, "Invalid outputsize given.")
+      end
     end
 
     context 'when adjusted' do
@@ -203,16 +209,58 @@ describe AlphavantageRuby::TimeSeries do
       end
 
       it 'returns daily adjusted time series' do
-        expect(subject.daily_adjusted_time_series["2021-04-23"]).to have_attributes({
+        expect(subject.time_series_daily["2021-04-23"]).to have_attributes({
           close: "729.4",
           high: "737.36",
           low: "715.46",
           volume: "27703323",
           adjustedclose: "729.4",
           dividendamount: "0.0000",
-          split_coefficient: "1.0"
+          splitcoefficient: "1.0"
         })
-        expect(subject.daily_adjusted_time_series["2021-04-23"].open).to eq("719.8")
+        expect(subject.time_series_daily["2021-04-23"].open).to eq("719.8")
+      end
+    end
+  end
+
+  describe '#intraday' do
+    subject { described_class.new(symbol: 'TSLA').intraday }
+    before do
+      stub_request(:get, "https://www.alphavantage.co/query?adjusted=true&apikey=someKey&datatype=json&function=TIME_SERIES_INTRADAY&interval=5min&outputsize=compact&symbol=TSLA").
+        to_return(status: 200, body: file_fixture("intraday.json"), headers: {})
+    end
+
+    it 'returns meta data' do
+      expect(subject.meta_data).to have_attributes({ 
+        information: "Intraday (5min) open, high, low, close prices and volume",
+        last_refreshed: "2021-04-23 20:00:00",
+        symbol: "TSLA",
+        output_size: "Compact",
+        time_zone: "US/Eastern"
+      })
+    end
+
+    it 'returns daily time series' do
+      expect(subject.time_series5min["2021-04-23 20:00:00"]).to have_attributes({
+        close: "730.1000",
+        high: "730.5000",
+        low: "730.1000",
+        volume: "5637"
+      })
+      expect(subject.time_series5min["2021-04-23 20:00:00"].open).to eq("730.2500")
+    end
+
+    context 'when invalid outputsize given' do
+      subject { described_class.new(symbol: 'TSLA').intraday(outputsize: 'invalid') }
+      it 'should raise error' do
+        expect { subject }.to raise_error(AlphavantageRuby::Error, "Invalid outputsize given.")
+      end
+    end
+
+    context 'when invalid interval given' do
+      subject { described_class.new(symbol: 'TSLA').intraday(interval: '100min') }
+      it 'should raise error' do
+        expect { subject }.to raise_error(AlphavantageRuby::Error, "Invalid interval given.")
       end
     end
   end

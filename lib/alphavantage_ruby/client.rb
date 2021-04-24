@@ -41,7 +41,7 @@ module AlphavantageRuby
 
       # Because for some reason, calling search returns keys like "1. symbol"
       def sanitize_key(key)
-        key.to_s.gsub(/\W+/, "").gsub(/\d+/, "")
+        key.to_s.gsub(/\W+/,"").gsub(/^\d+/, "")
       end
 
       def is_date?(key)
