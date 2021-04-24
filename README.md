@@ -25,6 +25,7 @@ Set the `AlphavantageRuby.configuration.api_key` to its value. If you are using 
 
 ```
 require 'alphavantage_ruby'
+
 AlphavantageRuby.configure do |config|
     config.api_key = 'your-api-key'
 end
@@ -33,8 +34,12 @@ end
 
 ```
 AlphavantageRuby::TimeSeries.search(keywords: 'Tesla')
-stock = AlphavantageRuby.new(symbol: 'TSLA')
-stock.quote
+
+stock_timeseries = AlphavantageRuby.new(symbol: 'TSLA')
+stock_timeseries.quote
+
+stock_timeseries.monthly
+stock_timeseries.monthly(adjusted: true)
 ```
 ## Development
 

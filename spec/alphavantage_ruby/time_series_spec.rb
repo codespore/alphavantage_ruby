@@ -44,4 +44,58 @@ describe AlphavantageRuby::TimeSeries do
       expect(subject.open).to eq("719.8000")
     end
   end
+
+  describe '#monthly' do
+    subject { described_class.new(symbol: 'TSLA').monthly }
+    before do
+      stub_request(:get, "https://www.alphavantage.co/query?apikey=someKey&datatype=json&function=TIME_SERIES_MONTHLY&symbol=TSLA").
+        to_return(status: 200, body: file_fixture("monthly.json"), headers: {})
+    end
+    
+    it 'returns meta data' do
+      expect(subject.meta_data).to have_attributes({ 
+        information: "Monthly Prices (open, high, low, close) and Volumes",
+        last_refreshed: "2021-04-23",
+        symbol: "TSLA",
+        time_zone: "US/Eastern"
+      })
+    end
+
+    it 'returns monthly time series' do
+      expect(subject.monthly_time_series["2021-04-23"]).to have_attributes({
+        close: "729.4000",
+        high: "780.7900",
+        low: "659.4200",
+        volume: "525522527"
+      })
+      expect(subject.monthly_time_series["2021-04-23"].open).to eq("688.3700")
+    end
+
+    context 'when adjusted' do
+      subject { described_class.new(symbol: 'TSLA').monthly(adjusted: true) }
+      before do
+        stub_request(:get, "https://www.alphavantage.co/query?apikey=someKey&datatype=json&function=TIME_SERIES_MONTHLY_ADJUSTED&symbol=TSLA").
+          to_return(status: 200, body: file_fixture("monthly_adjusted.json"), headers: {})
+      end
+
+      it 'returns meta data' do
+        expect(subject.meta_data).to have_attributes({ 
+          information: "Monthly Adjusted Prices and Volumes",
+          last_refreshed: "2021-04-23",
+          symbol: "TSLA",
+          time_zone: "US/Eastern"
+        })
+      end
+
+      it 'returns monthly adjusted time series' do
+        expect(subject.monthly_adjusted_time_series["2021-04-23"]).to have_attributes({
+          close: "729.4000",
+          high: "780.7900",
+          low: "659.4200",
+          volume: "525522527"
+        })
+        expect(subject.monthly_adjusted_time_series["2021-04-23"].open).to eq("688.3700")
+      end
+    end
+  end
 end
