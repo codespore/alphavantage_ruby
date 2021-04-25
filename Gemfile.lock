@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    alphavantage (1.0.0)
+    alphavantage (1.0.1)
       faraday (~> 1.4)
       hashie (~> 4.1)
 
