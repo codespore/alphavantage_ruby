@@ -39,7 +39,7 @@ describe Alphavantage::Forex do
     end
 
     it 'returns time series' do
-      expect(subject.time_series_fx5min['2021-04-23 21:55:00'].close).to eq('1.20965')
+      expect(subject.time_series_fx_5min['2021-04-23 21:55:00'].close).to eq('1.20965')
     end
   end
 

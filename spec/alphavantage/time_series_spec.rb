@@ -31,11 +31,11 @@ describe Alphavantage::TimeSeries do
       expect(subject).to have_attributes({
         change: "9.7100",
         symbol: "TSLA",
-        changepercent: "1.3492%",
+        change_percent: "1.3492%",
         high: "737.3600",
-        latesttradingday: "2021-04-23",
+        latest_trading_day: "2021-04-23",
         low: "715.4600",
-        previousclose: "719.6900",
+        previous_close: "719.6900",
         price: "729.4000",
         volume: "27879033"
       })
@@ -93,8 +93,8 @@ describe Alphavantage::TimeSeries do
           high: "780.7900",
           low: "659.4200",
           volume: "525522527",
-          adjustedclose: "729.4000",
-          dividendamount: "0.0000"
+          adjusted_close: "729.4000",
+          dividend_amount: "0.0000"
         })
         expect(subject.monthly_adjusted_time_series["2021-04-23"].open).to eq("688.3700")
       end
@@ -149,8 +149,8 @@ describe Alphavantage::TimeSeries do
           high: "753.7700",
           low: "691.8001",
           volume: "169804356",
-          adjustedclose: "729.4000",
-          dividendamount: "0.0000"
+          adjusted_close: "729.4000",
+          dividend_amount: "0.0000"
         })
         expect(subject.weekly_adjusted_time_series["2021-04-23"].open).to eq("719.6000")
       end
@@ -214,9 +214,9 @@ describe Alphavantage::TimeSeries do
           high: "737.36",
           low: "715.46",
           volume: "27703323",
-          adjustedclose: "729.4",
-          dividendamount: "0.0000",
-          splitcoefficient: "1.0"
+          adjusted_close: "729.4",
+          dividend_amount: "0.0000",
+          split_coefficient: "1.0"
         })
         expect(subject.time_series_daily["2021-04-23"].open).to eq("719.8")
       end
@@ -241,13 +241,13 @@ describe Alphavantage::TimeSeries do
     end
 
     it 'returns daily time series' do
-      expect(subject.time_series5min["2021-04-23 20:00:00"]).to have_attributes({
+      expect(subject.time_series_5min["2021-04-23 20:00:00"]).to have_attributes({
         close: "730.1000",
         high: "730.5000",
         low: "730.1000",
         volume: "5637"
       })
-      expect(subject.time_series5min["2021-04-23 20:00:00"].open).to eq("730.2500")
+      expect(subject.time_series_5min["2021-04-23 20:00:00"].open).to eq("730.2500")
     end
 
     context 'when invalid outputsize given' do

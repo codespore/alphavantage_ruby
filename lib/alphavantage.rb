@@ -1,6 +1,7 @@
 require "alphavantage/version"
 require "alphavantage/error"
 require "alphavantage/configuration"
+require "alphavantage/normalize_key"
 require "alphavantage/client"
 require "alphavantage/validations"
 require "alphavantage/time_series"
