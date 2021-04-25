@@ -27,10 +27,10 @@ Set the `Alphavantage.configuration.api_key` to its value. If you are using Rail
 require 'alphavantage'
 
 Alphavantage.configure do |config|
-    config.api_key = 'your-api-key'
+  config.api_key = 'your-api-key'
 end
 ```
-### Accessing Time Series
+### Accessing Stock Time Series
 
 ```
 Alphavantage::TimeSeries.search(keywords: 'Tesla')
@@ -44,7 +44,6 @@ stock_timeseries.daily(outputsize: 'compact')
 stock_timeseries.daily(adjusted: true, outputsize: 'full')
 stock_timeseries.intraday(adjusted: true, outputsize: 'compact', interval: '5min')
 ```
-
 ### Accessing Fundamental Data
 ```
 company = Alphavantage::Fundamental.new(symbol: 'TSLA')
@@ -53,6 +52,15 @@ company.earnings
 company.income_statement
 company.balance_sheet
 company.cash_flow
+```
+### Accessing Forex
+```
+forex = Alphavantage::Forex.new(from_symbol: 'USD', to_symbol: 'JPY')
+forex.exchange_rates
+forex.intraday(interval: '5min', outputsize: 'compact')
+forex.daily(outputsize: 'compact')
+forex.weekly
+forex.monthly
 ```
 ## Development
 
