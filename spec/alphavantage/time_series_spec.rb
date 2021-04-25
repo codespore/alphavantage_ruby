@@ -10,7 +10,7 @@ describe Alphavantage::TimeSeries do
     subject { described_class.search(keywords: 'Tesla') }
 
     before do
-      stub_request(:get, "https://www.alphavantage.co/query?apikey=someKey&datatype=json&function=SYMBOL_SEARCH&keywords=Tesla").
+      stub_request(:get, "https://www.alphavantage.co/query?apikey=someKey&function=SYMBOL_SEARCH&keywords=Tesla").
         to_return(status: 200, body: file_fixture("time_series/search.json"), headers: {})
     end
 
@@ -23,7 +23,7 @@ describe Alphavantage::TimeSeries do
     subject { described_class.new(symbol: 'TSLA').quote }
 
     before do
-      stub_request(:get, "https://www.alphavantage.co/query?apikey=someKey&datatype=json&function=GLOBAL_QUOTES&symbol=TSLA").
+      stub_request(:get, "https://www.alphavantage.co/query?apikey=someKey&function=GLOBAL_QUOTES&symbol=TSLA").
         to_return(status: 200, body: file_fixture("time_series/quote.json"), headers: {})
     end
 
@@ -48,7 +48,7 @@ describe Alphavantage::TimeSeries do
   describe '#monthly' do
     subject { described_class.new(symbol: 'TSLA').monthly }
     before do
-      stub_request(:get, "https://www.alphavantage.co/query?apikey=someKey&datatype=json&function=TIME_SERIES_MONTHLY&symbol=TSLA").
+      stub_request(:get, "https://www.alphavantage.co/query?apikey=someKey&function=TIME_SERIES_MONTHLY&symbol=TSLA").
         to_return(status: 200, body: file_fixture("time_series/monthly.json"), headers: {})
     end
     
@@ -74,7 +74,7 @@ describe Alphavantage::TimeSeries do
     context 'when adjusted' do
       subject { described_class.new(symbol: 'TSLA').monthly(adjusted: true) }
       before do
-        stub_request(:get, "https://www.alphavantage.co/query?apikey=someKey&datatype=json&function=TIME_SERIES_MONTHLY_ADJUSTED&symbol=TSLA").
+        stub_request(:get, "https://www.alphavantage.co/query?apikey=someKey&function=TIME_SERIES_MONTHLY_ADJUSTED&symbol=TSLA").
           to_return(status: 200, body: file_fixture("time_series/monthly_adjusted.json"), headers: {})
       end
 
@@ -104,7 +104,7 @@ describe Alphavantage::TimeSeries do
   describe '#weekly' do
     subject { described_class.new(symbol: 'TSLA').weekly }
     before do
-      stub_request(:get, "https://www.alphavantage.co/query?apikey=someKey&datatype=json&function=TIME_SERIES_WEEKLY&symbol=TSLA").
+      stub_request(:get, "https://www.alphavantage.co/query?apikey=someKey&function=TIME_SERIES_WEEKLY&symbol=TSLA").
         to_return(status: 200, body: file_fixture("time_series/weekly.json"), headers: {})
     end
     
@@ -130,7 +130,7 @@ describe Alphavantage::TimeSeries do
     context 'when adjusted' do
       subject { described_class.new(symbol: 'TSLA').weekly(adjusted: true) }
       before do
-        stub_request(:get, "https://www.alphavantage.co/query?apikey=someKey&datatype=json&function=TIME_SERIES_WEEKLY_ADJUSTED&symbol=TSLA").
+        stub_request(:get, "https://www.alphavantage.co/query?apikey=someKey&function=TIME_SERIES_WEEKLY_ADJUSTED&symbol=TSLA").
           to_return(status: 200, body: file_fixture("time_series/weekly_adjusted.json"), headers: {})
       end
 
@@ -160,7 +160,7 @@ describe Alphavantage::TimeSeries do
   describe '#daily' do
     subject { described_class.new(symbol: 'TSLA').daily }
     before do
-      stub_request(:get, "https://www.alphavantage.co/query?apikey=someKey&datatype=json&function=TIME_SERIES_DAILY&outputsize=compact&symbol=TSLA").
+      stub_request(:get, "https://www.alphavantage.co/query?apikey=someKey&function=TIME_SERIES_DAILY&outputsize=compact&symbol=TSLA").
         to_return(status: 200, body: file_fixture("time_series/daily.json"), headers: {})
     end
     
@@ -194,7 +194,7 @@ describe Alphavantage::TimeSeries do
     context 'when adjusted' do
       subject { described_class.new(symbol: 'TSLA').daily(adjusted: true) }
       before do
-        stub_request(:get, "https://www.alphavantage.co/query?apikey=someKey&datatype=json&function=TIME_SERIES_DAILY_ADJUSTED&outputsize=compact&symbol=TSLA").
+        stub_request(:get, "https://www.alphavantage.co/query?apikey=someKey&function=TIME_SERIES_DAILY_ADJUSTED&outputsize=compact&symbol=TSLA").
           to_return(status: 200, body: file_fixture("time_series/daily_adjusted.json"), headers: {})
       end
 
@@ -226,7 +226,7 @@ describe Alphavantage::TimeSeries do
   describe '#intraday' do
     subject { described_class.new(symbol: 'TSLA').intraday }
     before do
-      stub_request(:get, "https://www.alphavantage.co/query?adjusted=true&apikey=someKey&datatype=json&function=TIME_SERIES_INTRADAY&interval=5min&outputsize=compact&symbol=TSLA").
+      stub_request(:get, "https://www.alphavantage.co/query?adjusted=true&apikey=someKey&function=TIME_SERIES_INTRADAY&interval=5min&outputsize=compact&symbol=TSLA").
         to_return(status: 200, body: file_fixture("time_series/intraday.json"), headers: {})
     end
 

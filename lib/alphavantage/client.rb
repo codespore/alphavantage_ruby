@@ -6,7 +6,7 @@ module Alphavantage
 
     class << self
       def get(params:)
-        default_params = { apikey: Alphavantage.configuration.api_key, datatype: 'json' }
+        default_params = { apikey: Alphavantage.configuration.api_key }
         response = Faraday.get('https://www.alphavantage.co/query') do |req|
           req.params = default_params.merge(params)
           req.headers['Content-Type'] = 'application/json'

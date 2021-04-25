@@ -9,7 +9,7 @@ describe Alphavantage::Fundamental do
     subject { described_class.new(symbol: 'TSLA').overview }
 
     before do
-      stub_request(:get, "https://www.alphavantage.co/query?apikey=someKey&datatype=json&function=OVERVIEW&symbol=TSLA").
+      stub_request(:get, "https://www.alphavantage.co/query?apikey=someKey&function=OVERVIEW&symbol=TSLA").
         to_return(status: 200, body: file_fixture("fundamental/company_overview.json"), headers: {})
     end
 
@@ -22,7 +22,7 @@ describe Alphavantage::Fundamental do
     subject { described_class.new(symbol: 'TSLA').earnings }
 
     before do
-      stub_request(:get, "https://www.alphavantage.co/query?apikey=someKey&datatype=json&function=EARNINGS&symbol=TSLA").
+      stub_request(:get, "https://www.alphavantage.co/query?apikey=someKey&function=EARNINGS&symbol=TSLA").
         to_return(status: 200, body: file_fixture("fundamental/earnings.json"), headers: {})
     end
 
@@ -35,7 +35,7 @@ describe Alphavantage::Fundamental do
     subject { described_class.new(symbol: 'TSLA').income_statement }
 
     before do
-      stub_request(:get, "https://www.alphavantage.co/query?apikey=someKey&datatype=json&function=INCOME_STATEMENT&symbol=TSLA").
+      stub_request(:get, "https://www.alphavantage.co/query?apikey=someKey&function=INCOME_STATEMENT&symbol=TSLA").
         to_return(status: 200, body: file_fixture("fundamental/income_statement.json"), headers: {})
     end
 
@@ -48,7 +48,7 @@ describe Alphavantage::Fundamental do
     subject { described_class.new(symbol: 'TSLA').balance_sheet }
 
     before do
-      stub_request(:get, "https://www.alphavantage.co/query?apikey=someKey&datatype=json&function=BALANCE_SHEET&symbol=TSLA").
+      stub_request(:get, "https://www.alphavantage.co/query?apikey=someKey&function=BALANCE_SHEET&symbol=TSLA").
         to_return(status: 200, body: file_fixture("fundamental/balance_sheet.json"), headers: {})
     end
 
@@ -61,7 +61,7 @@ describe Alphavantage::Fundamental do
     subject { described_class.new(symbol: 'TSLA').cash_flow }
 
     before do
-      stub_request(:get, "https://www.alphavantage.co/query?apikey=someKey&datatype=json&function=CASH_FLOW&symbol=TSLA").
+      stub_request(:get, "https://www.alphavantage.co/query?apikey=someKey&function=CASH_FLOW&symbol=TSLA").
         to_return(status: 200, body: file_fixture("fundamental/cash_flow.json"), headers: {})
     end
 
