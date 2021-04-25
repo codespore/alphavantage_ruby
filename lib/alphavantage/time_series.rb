@@ -4,7 +4,7 @@ module Alphavantage
 
     FUNCTIONS = { 
       search: 'SYMBOL_SEARCH',
-      quote: 'GLOBAL_QUOTES',
+      quote: 'GLOBAL_QUOTE',
       monthly: 'TIME_SERIES_MONTHLY',
       monthly_adjusted: 'TIME_SERIES_MONTHLY_ADJUSTED',
       weekly: 'TIME_SERIES_WEEKLY',

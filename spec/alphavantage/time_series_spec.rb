@@ -23,7 +23,7 @@ describe Alphavantage::TimeSeries do
     subject { described_class.new(symbol: 'TSLA').quote }
 
     before do
-      stub_request(:get, "https://www.alphavantage.co/query?apikey=someKey&function=GLOBAL_QUOTES&symbol=TSLA").
+      stub_request(:get, "https://www.alphavantage.co/query?apikey=someKey&function=GLOBAL_QUOTE&symbol=TSLA").
         to_return(status: 200, body: file_fixture("time_series/quote.json"), headers: {})
     end
 
