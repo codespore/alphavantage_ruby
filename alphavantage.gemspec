@@ -1,11 +1,11 @@
 
 lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require "alphavantage_ruby/version"
+require "alphavantage/version"
 
 Gem::Specification.new do |spec|
-  spec.name          = "alphavantage_ruby"
-  spec.version       = AlphavantageRuby::VERSION
+  spec.name          = "alphavantage"
+  spec.version       = Alphavantage::VERSION
   spec.authors       = ["Adrian Teh"]
   spec.email         = ["ateh.dev@gmail.com"]
 

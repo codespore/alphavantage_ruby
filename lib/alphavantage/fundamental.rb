@@ -1,4 +1,4 @@
-module AlphavantageRuby
+module Alphavantage
   class Fundamental
     FUNCTIONS = { 
       overview: 'OVERVIEW',

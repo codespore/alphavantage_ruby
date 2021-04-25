@@ -1,4 +1,4 @@
-module AlphavantageRuby
+module Alphavantage
   class << self
     def configuration
       @configuration ||= Configuration.new

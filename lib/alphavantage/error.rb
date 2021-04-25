@@ -1,3 +1,3 @@
-module AlphavantageRuby
+module Alphavantage
   class Error < StandardError; end
 end

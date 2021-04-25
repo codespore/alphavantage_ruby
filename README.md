@@ -7,7 +7,7 @@ The Alpha Vantage Ruby library provides convenient access to the [Alpha Vantage 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'alphavantage_ruby'
+gem 'alphavantage'
 ```
 
 And then execute:
@@ -16,25 +16,25 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install alphavantage_ruby
+    $ gem install alphavantage
 
 ## Usage
 
 The library needs to be configured with your account's api key which you can obtain from https://www.alphavantage.co/support/#api-key.
-Set the `AlphavantageRuby.configuration.api_key` to its value. If you are using Rails, you can configure this in an initializer.
+Set the `Alphavantage.configuration.api_key` to its value. If you are using Rails, you can configure this in an initializer.
 
 ```
-require 'alphavantage_ruby'
+require 'alphavantage'
 
-AlphavantageRuby.configure do |config|
+Alphavantage.configure do |config|
     config.api_key = 'your-api-key'
 end
 ```
 ### Accessing Time Series
 
 ```
-AlphavantageRuby::TimeSeries.search(keywords: 'Tesla')
-stock_timeseries = AlphavantageRuby::TimeSeries.new(symbol: 'TSLA')
+Alphavantage::TimeSeries.search(keywords: 'Tesla')
+stock_timeseries = Alphavantage::TimeSeries.new(symbol: 'TSLA')
 stock_timeseries.quote
 stock_timeseries.monthly
 stock_timeseries.monthly(adjusted: true)
@@ -47,7 +47,7 @@ stock_timeseries.intraday(adjusted: true, outputsize: 'compact', interval: '5min
 
 ### Accessing Fundamental Data
 ```
-company = AlphavantageRuby::Fundamental.new(symbol: 'TSLA')
+company = Alphavantage::Fundamental.new(symbol: 'TSLA')
 company.overview
 company.earnings
 company.income_statement
@@ -70,4 +70,4 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 ## Code of Conduct
 
-Everyone interacting in the AlphavantageRuby project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/codespore/alphavantage_ruby/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in the Alphavantage project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/codespore/alphavantage_ruby/blob/master/CODE_OF_CONDUCT.md).

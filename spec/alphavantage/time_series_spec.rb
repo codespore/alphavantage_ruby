@@ -1,7 +1,7 @@
 
-describe AlphavantageRuby::TimeSeries do
+describe Alphavantage::TimeSeries do
   before do
-    AlphavantageRuby.configure do |config|
+    Alphavantage.configure do |config|
       config.api_key = 'someKey'
     end
   end
@@ -187,7 +187,7 @@ describe AlphavantageRuby::TimeSeries do
     context 'when invalid outputsize given' do
       subject { described_class.new(symbol: 'TSLA').daily(outputsize: 'invalid') }
       it 'should raise error' do
-        expect { subject }.to raise_error(AlphavantageRuby::Error, "Invalid outputsize given.")
+        expect { subject }.to raise_error(Alphavantage::Error, "Invalid outputsize given.")
       end
     end
 
@@ -253,14 +253,14 @@ describe AlphavantageRuby::TimeSeries do
     context 'when invalid outputsize given' do
       subject { described_class.new(symbol: 'TSLA').intraday(outputsize: 'invalid') }
       it 'should raise error' do
-        expect { subject }.to raise_error(AlphavantageRuby::Error, "Invalid outputsize given.")
+        expect { subject }.to raise_error(Alphavantage::Error, "Invalid outputsize given.")
       end
     end
 
     context 'when invalid interval given' do
       subject { described_class.new(symbol: 'TSLA').intraday(interval: '100min') }
       it 'should raise error' do
-        expect { subject }.to raise_error(AlphavantageRuby::Error, "Invalid interval given.")
+        expect { subject }.to raise_error(Alphavantage::Error, "Invalid interval given.")
       end
     end
   end

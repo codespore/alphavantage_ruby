@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    alphavantage_ruby (0.1.0)
+    alphavantage (0.1.0)
       faraday (~> 1.4)
       hashie (~> 4.1)
 
@@ -52,7 +52,7 @@ PLATFORMS
   x86_64-darwin-19
 
 DEPENDENCIES
-  alphavantage_ruby!
+  alphavantage!
   bundler (~> 2.2)
   byebug
   rake (~> 10.0)

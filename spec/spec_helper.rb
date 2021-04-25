@@ -1,5 +1,5 @@
 require "bundler/setup"
-require "alphavantage_ruby"
+require "alphavantage"
 require "webmock/rspec"
 require "support/file_fixture"
 require "byebug"

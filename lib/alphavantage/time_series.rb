@@ -1,4 +1,4 @@
-module AlphavantageRuby
+module Alphavantage
   class TimeSeries
 
     FUNCTIONS = { 
@@ -52,7 +52,7 @@ module AlphavantageRuby
 
     def intraday(adjusted: true, outputsize: 'compact', interval: '5min', extended_history: false, slice: 'year1month1')
       if extended_history
-        raise AlphavantageRuby::Error, "Extended history returns a CSV which will be supported at a later time."
+        raise Alphavantage::Error, "Extended history returns a CSV which will be supported at a later time."
         # params = { 
         #   function: FUNCTIONS[:intraday_extended_history], 
         #   symbol: @symbol, 
@@ -75,17 +75,17 @@ module AlphavantageRuby
     private
 
     def validate_slice(slice)
-      raise AlphavantageRuby::Error, "Invalid slice given." unless VALID_SLICES.include?(slice)
+      raise Alphavantage::Error, "Invalid slice given." unless VALID_SLICES.include?(slice)
       slice
     end
 
     def validate_interval(interval)
-      raise AlphavantageRuby::Error, "Invalid interval given." unless VALID_INTERVALS.include?(interval)
+      raise Alphavantage::Error, "Invalid interval given." unless VALID_INTERVALS.include?(interval)
       interval
     end
 
     def validate_outputsize(outputsize)
-      raise AlphavantageRuby::Error, "Invalid outputsize given." unless VALID_OUTPUTSIZES.include?(outputsize)
+      raise Alphavantage::Error, "Invalid outputsize given." unless VALID_OUTPUTSIZES.include?(outputsize)
       outputsize
     end
 

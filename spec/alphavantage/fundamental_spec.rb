@@ -1,6 +1,6 @@
-describe AlphavantageRuby::Fundamental do
+describe Alphavantage::Fundamental do
   before do
-    AlphavantageRuby.configure do |config|
+    Alphavantage.configure do |config|
       config.api_key = 'someKey'
     end
   end
