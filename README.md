@@ -30,10 +30,30 @@ Alphavantage.configure do |config|
   config.api_key = 'your-api-key'
 end
 ```
-### Accessing Stock Time Series
+
+### Accessing a response object
+All JSON responses are converted to pseudo-objects that have method-like accessors for hash keys
+```
+quote = Alphavantage::TimeSeries.new(symbol: 'TSLA').quote
+quote.previous_close #=> "719.6900"
+quote.volume         #=> "27879033"
+```
+
+All hash keys are also normalized to provide clean and consistent access to values since the Alphavantage API returns arbitrarily formatted keys with numbers, spaces, letters and symbols (i.e. "Crypto Rating (FCAS)", "3. fcas rating", "4. Last Refreshed", "Time Series FX (5min)", "1a. open (CNY)")
+
+With this normalization, you can now access via 
+
+`intraday.time_series_fx_5min` 
+
+instead of
+
+`intraday["Time Series FX (5min)"]`
+
+### Stock Time Series
 
 ```
 Alphavantage::TimeSeries.search(keywords: 'Tesla')
+
 stock_timeseries = Alphavantage::TimeSeries.new(symbol: 'TSLA')
 stock_timeseries.quote
 stock_timeseries.monthly
@@ -44,7 +64,7 @@ stock_timeseries.daily(outputsize: 'compact')
 stock_timeseries.daily(adjusted: true, outputsize: 'full')
 stock_timeseries.intraday(adjusted: true, outputsize: 'compact', interval: '5min')
 ```
-### Accessing Fundamental Data
+### Fundamental Data
 ```
 company = Alphavantage::Fundamental.new(symbol: 'TSLA')
 company.overview
@@ -53,7 +73,7 @@ company.income_statement
 company.balance_sheet
 company.cash_flow
 ```
-### Accessing Forex
+### Forex
 ```
 forex = Alphavantage::Forex.new(from_symbol: 'USD', to_symbol: 'JPY')
 forex.exchange_rates
@@ -61,6 +81,16 @@ forex.intraday(interval: '5min', outputsize: 'compact')
 forex.daily(outputsize: 'compact')
 forex.weekly
 forex.monthly
+```
+### Crypto Currencies
+```
+Alphavantage::Crypto.health_index(symbol: 'BTC')
+
+crypto = Alphavantage::Crypto.new(symbol: 'BTC', market: 'USD')
+crypto.intraday(interval: '5min')
+crypto.daily
+crypto.weekly
+crypto.monthly
 ```
 ## Development
 

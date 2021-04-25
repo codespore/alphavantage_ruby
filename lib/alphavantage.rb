@@ -1,3 +1,5 @@
+require "faraday"
+require "hashie"
 require "alphavantage/version"
 require "alphavantage/error"
 require "alphavantage/configuration"

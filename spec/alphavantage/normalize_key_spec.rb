@@ -5,12 +5,14 @@ describe Alphavantage::NormalizeKey do
     let(:key_b) { "3. fcas rating" }
     let(:key_c) { "4. Last Refreshed" }
     let(:key_d) { "Time Series FX (5min)" }
+    let(:key_e) { "1a. open (CNY)" }
 
     it 'returns normalized key' do
       expect(described_class.new(key: key_a).call).to eq(:crypto_rating_fcas)
       expect(described_class.new(key: key_b).call).to eq(:fcas_rating)
       expect(described_class.new(key: key_c).call).to eq(:last_refreshed)
       expect(described_class.new(key: key_d).call).to eq(:time_series_fx_5min)
+      expect(described_class.new(key: key_e).call).to eq(:open_cny)
     end
 
     context 'when key is date' do

@@ -1,5 +1,3 @@
-require 'faraday'
-require 'hashie'
 module Alphavantage
   class Client
 
