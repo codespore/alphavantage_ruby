@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Adrian Teh"]
   spec.email         = ["ateh.dev@gmail.com"]
 
-  spec.summary       = "Ruby bindings for the Alpha Vantage API"
-  spec.description   = "Alpha Vantage is the leading provider of stock APIs as well as forex (FX) and cryptocurrency data feeds."
+  spec.summary       = "Ruby library for Alpha Vantage API"
+  spec.description   = "Ruby library for the Alpha Vantage API, a leading provider of stock APIs as well as forex (FX) and cryptocurrency data feeds."
   spec.homepage      = "https://github.com/codespore/alphavantage_ruby"
   spec.license       = "MIT"
 
