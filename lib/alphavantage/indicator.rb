@@ -32,5 +32,17 @@ module Alphavantage
     alias :trix     :sma
     alias :midpoint :sma
 
+    def vwap
+      Client.get(params: { 
+        function: __callee__.upcase,
+        symbol: @symbol,
+        interval: [:bop,:trange,:ad,:obv].include?(__callee__) ? validate_indicator_interval(@interval) : validate_interval(@interval)
+      })
+    end
+    alias :bop      :vwap
+    alias :trange   :vwap
+    alias :ad       :vwap
+    alias :obv      :vwap
+
   end
 end

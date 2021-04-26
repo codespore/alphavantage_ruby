@@ -20,7 +20,7 @@ module Alphavantage
     end
 
     def sanitize_key(key)
-      key.tr('.():','').gsub(/^\d+.?\s/, "").tr(' ','_')
+      key.tr('.():/','').gsub(/^\d+.?\s/, "").tr(' ','_')
     end
 
     def is_date?(key)
