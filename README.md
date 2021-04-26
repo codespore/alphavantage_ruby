@@ -1,3 +1,4 @@
+[![Gem Version](https://badge.fury.io/rb/alphavantage.svg)](https://badge.fury.io/rb/alphavantage)
 # Alpha Vantage Ruby Library
 
 The Alpha Vantage Ruby library provides convenient access to the [Alpha Vantage API](https://www.alphavantage.co/documentation/) from applications written in the Ruby language.
