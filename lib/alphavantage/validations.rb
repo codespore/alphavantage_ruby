@@ -43,6 +43,16 @@ module Alphavantage
       time_period
     end
 
+    def validate_integer(label:,value:)
+      raise Alphavantage::Error, "Invalid #{label} given. Must be integer." unless is_integer?(value)
+      value
+    end
+
+    def validate_mat(moving_average_type)
+      raise Alphavantage::Error, "Invalid moving average type given." if !(0..8).include?(moving_average_type)
+      moving_average_type
+    end
+
     def is_integer?(str)
       Integer(str) rescue false
     end
