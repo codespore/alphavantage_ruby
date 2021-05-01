@@ -93,6 +93,46 @@ crypto.daily
 crypto.weekly
 crypto.monthly
 ```
+
+### Technical Indicators
+You can access all available indicators by simply using the actual technical indicator name listed on the [Alpha Vantage Documenetation](https://www.alphavantage.co/documentation/#technical-indicators) as the method name (i.e. `.stoch`, `.rsi`, `.plus_dm`, `.ht_trendline`, etc.).
+
+You can also dig into [alphavantage/indicator.rb](https://github.com/codespore/alphavantage_ruby/blob/main/lib/alphavantage/indicator.rb) to view the list of available indicators.
+
+```
+indicator = Alphavantage::Indicator.new(symbol: 'TSLA', interval: '5min')
+indicator.sma(time_period: 7, series_type: 'close')
+indicator.macd(series_type: 'open', fastperiod: 12, slowperiod: 26, signalperiod: 9)
+
+indicator.macdext(
+  series_type:, 
+  fastperiod: 12, 
+  slowperiod: 26, 
+  signalperiod: 9,
+  fastmatype: 'sma',
+  slowmatype: 'sma',
+  signalmatype: 'sma'
+)
+```
+
+Moving average indicator as parameters have been mapped to allow you to simply provide the actual indicator name rather than the number value specified in the Alpha Vantage Documentation. Below is the mapping available that I've used in the above `.macdext` example for the `fastmatype`, `slowmatype` and `signalmatype` parameters
+
+```
+MOVING_AVERAGE_TYPES = {
+  sma: 0,
+  ema: 1,
+  wma: 2,
+  dema: 3,
+  tema: 4,
+  trima: 5,
+  t3: 6,
+  kama: 7,
+  mama: 8
+}
+```
+
+Validations are also implemented to ensure correct values are provided for the various parameters. You can view a list of the validations in [alphavantage/validations.rb](https://github.com/codespore/alphavantage_ruby/blob/main/lib/alphavantage/validations.rb)
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
