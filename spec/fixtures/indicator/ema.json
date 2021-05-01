@@ -1,0 +1,19 @@
+{
+  "Meta Data": {
+      "1: Symbol": "TSLA",
+      "2: Indicator": "Exponential Moving Average (EMA)",
+      "3: Last Refreshed": "2021-04-23",
+      "4: Interval": "weekly",
+      "5: Time Period": 10,
+      "6: Series Type": "open",
+      "7: Time Zone": "US/Eastern"
+  },
+  "Technical Analysis: EMA": {
+      "2021-04-23": {
+          "EMA": "699.3560"
+      },
+      "2021-04-16": {
+          "EMA": "694.8574"
+      }
+  }
+}

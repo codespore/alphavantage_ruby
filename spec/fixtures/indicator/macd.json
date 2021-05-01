@@ -1,0 +1,26 @@
+
+{
+  "Meta Data": {
+      "1: Symbol": "IBM",
+      "2: Indicator": "Moving Average Convergence/Divergence (MACD)",
+      "3: Last Refreshed": "2021-04-30",
+      "4: Interval": "daily",
+      "5.1: Fast Period": 12,
+      "5.2: Slow Period": 26,
+      "5.3: Signal Period": 9,
+      "6: Series Type": "open",
+      "7: Time Zone": "US/Eastern"
+  },
+  "Technical Analysis: MACD": {
+      "2021-04-30": {
+          "MACD": "3.5648",
+          "MACD_Signal": "3.0571",
+          "MACD_Hist": "0.5077"
+      },
+      "2021-04-29": {
+          "MACD": "3.5100",
+          "MACD_Signal": "2.9302",
+          "MACD_Hist": "0.5798"
+      }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "Meta Data": {
+      "1: Symbol": "IBM",
+      "2: Indicator": "Volume Weighted Average Price (VWAP)",
+      "3: Last Refreshed": "2021-04-30 20:00:00",
+      "4: Interval": "15min",
+      "5: Time Zone": "US/Eastern"
+  },
+  "Technical Analysis: VWAP": {
+      "2021-04-30 20:00": {
+          "VWAP": "141.5264"
+      },
+      "2021-04-30 19:45": {
+          "VWAP": "141.5264"
+      }
+  }
+}
