@@ -38,11 +38,6 @@ module Alphavantage
       series_type
     end
 
-    def validate_time_period(time_period)
-      raise Alphavantage::Error, "Invalid time period given. Must be integer." unless is_integer?(time_period)
-      time_period
-    end
-
     def validate_integer(label:,value:)
       raise Alphavantage::Error, "Invalid #{label} given. Must be integer." unless is_integer?(value)
       value

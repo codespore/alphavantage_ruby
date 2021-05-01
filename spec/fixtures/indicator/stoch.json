@@ -1,0 +1,24 @@
+{
+  "Meta Data": {
+      "1: Symbol": "IBM",
+      "2: Indicator": "Stochastic (STOCH)",
+      "3: Last Refreshed": "2021-04-30",
+      "4: Interval": "daily",
+      "5.1: FastK Period": 5,
+      "5.2: SlowK Period": 3,
+      "5.3: SlowK MA Type": 0,
+      "5.4: SlowD Period": 3,
+      "5.5: SlowD MA Type": 0,
+      "6: Time Zone": "US/Eastern Time"
+  },
+  "Technical Analysis: STOCH": {
+      "2021-04-30": {
+          "SlowK": "38.7700",
+          "SlowD": "50.6307"
+      },
+      "2021-04-29": {
+          "SlowK": "53.7457",
+          "SlowD": "60.2343"
+      }
+  }
+}

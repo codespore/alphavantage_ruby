@@ -12,7 +12,7 @@ module Alphavantage
         function: __callee__.upcase,
         symbol: @symbol,
         interval: validate_indicator_interval(@interval),
-        time_period: validate_time_period(time_period),
+        time_period: validate_integer(label: 'time period', value: time_period),
         series_type: validate_series_type(series_type)
       })
     end
@@ -124,7 +124,7 @@ module Alphavantage
         function: __callee__.upcase,
         symbol: @symbol,
         interval: validate_indicator_interval(@interval),
-        time_period: validate_time_period(time_period),
+        time_period: validate_integer(label: 'time period', value: time_period),
         series_type: validate_series_type(series_type),
         fastkperiod: validate_integer(label: 'fastkperiod', value: fastkperiod),
         fastdperiod: validate_integer(label: 'fastdperiod', value: fastdperiod),
@@ -137,7 +137,7 @@ module Alphavantage
         function: __callee__.upcase,
         symbol: @symbol,
         interval: validate_indicator_interval(@interval),
-        time_period: validate_time_period(time_period)
+        time_period: validate_integer(label: 'time period', value: time_period)
       })
     end
     alias :adx      :willr
@@ -208,7 +208,7 @@ module Alphavantage
         function: __callee__.upcase,
         symbol: @symbol,
         interval: validate_indicator_interval(@interval),
-        time_period: validate_time_period(time_period),
+        time_period: validate_integer(label: 'time period', value: time_period),
         series_type: validate_series_type(series_type),
         nbdevup: validate_integer(label: 'nbdevup', value: nbdevup),
         nbdevdn: validate_integer(label: 'nbdevdn', value: nbdevdn),
