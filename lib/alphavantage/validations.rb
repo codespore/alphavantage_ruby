@@ -4,39 +4,38 @@ module Alphavantage
       (1..12).map do |month|
         "year#{year}month#{month}"
       end
-    end.flatten
+    end.flatten.map(&:to_sym)
 
-    VALID_INTERVALS = %w{ 1min 5min 15min 30min 60min }
-    VALID_INDICATOR_INTERVALS = VALID_INTERVALS + %w{ daily weekly monthly }
-    VALID_OUTPUTSIZES = %w{ compact full }
-    VALID_SERIES_TYPE = %w{ close open high low }
-    VALID_DATA_TYPES = %w{ json csv }
+    VALID_INTERVALS = %i{ 1min 5min 15min 30min 60min }
+    VALID_INDICATOR_INTERVALS = VALID_INTERVALS + %i{ daily weekly monthly }
+    VALID_OUTPUTSIZES = %i{ compact full }
+    VALID_SERIES_TYPES = %i{ close open high low }
+    VALID_DATATYPES = %i{ json csv }
 
     private
 
-    def validate_slice(slice)
-      raise Alphavantage::Error, "Invalid slice given." unless VALID_SLICES.include?(slice)
-      slice
+    def validate_slice(value)
+      validate_from_collection(value: value, collection: VALID_SLICES, type: 'slice')
     end
 
-    def validate_interval(interval)
-      raise Alphavantage::Error, "Invalid interval given." unless VALID_INTERVALS.include?(interval)
-      interval
+    def validate_interval(value)
+      validate_from_collection(value: value, collection: VALID_INTERVALS, type: 'interval')
     end
 
-    def validate_outputsize(outputsize)
-      raise Alphavantage::Error, "Invalid outputsize given." unless VALID_OUTPUTSIZES.include?(outputsize)
-      outputsize
+    def validate_outputsize(value)
+      validate_from_collection(value: value, collection: VALID_OUTPUTSIZES, type: 'outputsize')
     end
 
-    def validate_indicator_interval(interval)
-      raise Alphavantage::Error, "Invalid interval given." unless VALID_INDICATOR_INTERVALS.include?(interval)
-      interval
+    def validate_indicator_interval(value)
+      validate_from_collection(value: value, collection: VALID_INDICATOR_INTERVALS, type: 'interval')
     end
 
-    def validate_series_type(series_type)
-      raise Alphavantage::Error, "Invalid series type given." unless VALID_SERIES_TYPE.include?(series_type)
-      series_type
+    def validate_series_type(value)
+      validate_from_collection(value: value, collection: VALID_SERIES_TYPES, type: 'series type')
+    end
+
+    def validate_datatype(value)
+      validate_from_collection(value: value, collection: VALID_DATATYPES, type: 'data type')
     end
 
     def validate_integer(label:,value:)
@@ -49,13 +48,17 @@ module Alphavantage
       moving_average_type
     end
 
-    def validate_datatype(datatype)
-      raise Alphavantage::Error, "Invalid data type given." unless VALID_DATA_TYPES.include?(datatype)
-      datatype
-    end
-
     def is_integer?(str)
       Integer(str) rescue false
+    end
+
+    private
+
+    def validate_from_collection(value:, collection:, type:)
+      return value if collection.include?(value.to_sym)
+
+      message = "Invalid #{type} given. Given #{value}, allowed: #{collection.map{|c| "'#{c}'"}.join(', ')}"
+      raise Alphavantage::Error, message
     end
   end
 end

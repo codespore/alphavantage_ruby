@@ -18,7 +18,7 @@ describe Alphavantage::Indicator do
     end
 
     it 'returns meta data' do
-      expect(subject.meta_data).to have_attributes({ 
+      expect(subject.meta_data).to have_attributes({
         indicator: "Simple Moving Average (SMA)"
       })
     end
@@ -32,7 +32,7 @@ describe Alphavantage::Indicator do
     context 'when invalid interval given' do
       let(:interval) { 'century' }
       it 'should raise error' do
-        expect { subject }.to raise_error(Alphavantage::Error, "Invalid interval given.")
+        expect { subject }.to raise_error(Alphavantage::Error, /Invalid interval given./)
       end
     end
 
@@ -46,7 +46,7 @@ describe Alphavantage::Indicator do
     context 'when invalid series type given' do
       let(:series_type) { 'banana' }
       it 'should raise error' do
-        expect { subject }.to raise_error(Alphavantage::Error, "Invalid series type given.")
+        expect { subject }.to raise_error(Alphavantage::Error, /Invalid series type given./)
       end
     end
   end
@@ -64,7 +64,7 @@ describe Alphavantage::Indicator do
     end
 
     it 'returns meta data' do
-      expect(subject.meta_data).to have_attributes({ 
+      expect(subject.meta_data).to have_attributes({
         indicator: "Exponential Moving Average (EMA)"
       })
     end
@@ -78,7 +78,7 @@ describe Alphavantage::Indicator do
     context 'when invalid interval given' do
       let(:interval) { 'century' }
       it 'should raise error' do
-        expect { subject }.to raise_error(Alphavantage::Error, "Invalid interval given.")
+        expect { subject }.to raise_error(Alphavantage::Error, /Invalid interval given./)
       end
     end
 
@@ -92,7 +92,7 @@ describe Alphavantage::Indicator do
     context 'when invalid series type given' do
       let(:series_type) { 'banana' }
       it 'should raise error' do
-        expect { subject }.to raise_error(Alphavantage::Error, "Invalid series type given.")
+        expect { subject }.to raise_error(Alphavantage::Error, /Invalid series type given./)
       end
     end
   end
@@ -107,7 +107,7 @@ describe Alphavantage::Indicator do
     end
 
     it 'returns meta data' do
-      expect(subject.meta_data).to have_attributes({ 
+      expect(subject.meta_data).to have_attributes({
         indicator: "Volume Weighted Average Price (VWAP)"
       })
     end
@@ -129,7 +129,7 @@ describe Alphavantage::Indicator do
     end
 
     it 'returns meta data' do
-      expect(subject.meta_data).to have_attributes({ 
+      expect(subject.meta_data).to have_attributes({
         indicator: "Balance Of Power (BOP)"
       })
     end
@@ -156,7 +156,7 @@ describe Alphavantage::Indicator do
     end
 
     it 'returns meta data' do
-      expect(subject.meta_data).to have_attributes({ 
+      expect(subject.meta_data).to have_attributes({
         indicator: "Moving Average Convergence/Divergence (MACD)"
       })
     end
@@ -176,15 +176,15 @@ describe Alphavantage::Indicator do
     let(:slowkmatype)  { 'ema' }
     let(:slowdmatype)  { 'kama' }
 
-    subject do 
+    subject do
       described_class.new(symbol: 'IBM', interval: interval).
         stoch(
-          fastkperiod: fastkperiod, 
-          slowkperiod: slowkperiod, 
-          slowdperiod: slowdperiod, 
+          fastkperiod: fastkperiod,
+          slowkperiod: slowkperiod,
+          slowdperiod: slowdperiod,
           slowkmatype: slowkmatype,
           slowdmatype: slowdmatype
-        ) 
+        )
     end
 
     before do
@@ -193,7 +193,7 @@ describe Alphavantage::Indicator do
     end
 
     it 'returns meta data' do
-      expect(subject.meta_data).to have_attributes({ 
+      expect(subject.meta_data).to have_attributes({
         indicator: "Stochastic (STOCH)"
       })
     end
@@ -205,5 +205,5 @@ describe Alphavantage::Indicator do
       })
     end
   end
-  
+
 end

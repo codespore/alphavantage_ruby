@@ -187,7 +187,7 @@ describe Alphavantage::TimeSeries do
     context 'when invalid outputsize given' do
       subject { described_class.new(symbol: 'TSLA').daily(outputsize: 'invalid') }
       it 'should raise error' do
-        expect { subject }.to raise_error(Alphavantage::Error, "Invalid outputsize given.")
+        expect { subject }.to raise_error(Alphavantage::Error, /Invalid outputsize given./)
       end
     end
 
@@ -254,21 +254,21 @@ describe Alphavantage::TimeSeries do
       context 'when invalid outputsize given' do
         subject { described_class.new(symbol: 'TSLA').intraday(outputsize: 'invalid') }
         it 'should raise error' do
-          expect { subject }.to raise_error(Alphavantage::Error, "Invalid outputsize given.")
+          expect { subject }.to raise_error(Alphavantage::Error, /Invalid outputsize given./)
         end
       end
 
       context 'when invalid interval given' do
         subject { described_class.new(symbol: 'TSLA').intraday(interval: '100min') }
         it 'should raise error' do
-          expect { subject }.to raise_error(Alphavantage::Error, "Invalid interval given.")
+          expect { subject }.to raise_error(Alphavantage::Error, /Invalid interval given./)
         end
       end
 
       context 'when invalid datatype given' do
         subject { described_class.new(symbol: 'TSLA').intraday(datatype: 'wrong') }
         it 'should raise error' do
-          expect { subject }.to raise_error(Alphavantage::Error, "Invalid data type given.")
+          expect { subject }.to raise_error(Alphavantage::Error, /Invalid data type given./)
         end
       end
     end
