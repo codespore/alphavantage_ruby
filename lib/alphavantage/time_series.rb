@@ -2,7 +2,7 @@ module Alphavantage
   class TimeSeries
     include Validations
 
-    FUNCTIONS = { 
+    FUNCTIONS = {
       search: 'SYMBOL_SEARCH',
       quote: 'GLOBAL_QUOTE',
       monthly: 'TIME_SERIES_MONTHLY',
@@ -42,26 +42,30 @@ module Alphavantage
       Client.get(params: { function: function, symbol: @symbol, outputsize: validate_outputsize(outputsize) })
     end
 
-    def intraday(adjusted: true, outputsize: 'compact', interval: '5min', extended_history: false, slice: 'year1month1')
-      if extended_history
-        raise Alphavantage::Error, "Extended history returns a CSV which will be supported at a later time."
-        # params = { 
-        #   function: FUNCTIONS[:intraday_extended_history], 
-        #   symbol: @symbol, 
-        #   slice: validate_slice(slice), 
-        #   interval: validate_interval(interval), 
-        #   adjusted: adjusted 
-        # }
-      else
-        params = { 
-          function: FUNCTIONS[__method__], 
-          symbol: @symbol, 
-          outputsize: validate_outputsize(outputsize), 
-          interval: validate_interval(interval), 
-          adjusted: adjusted 
-        }
-      end
-      Client.get(params: params)
+    def intraday(adjusted: true, outputsize: 'compact', interval: '5min', datatype: 'json')
+      params = {
+        function: FUNCTIONS[__method__],
+        symbol: @symbol,
+        outputsize: validate_outputsize(outputsize),
+        interval: validate_interval(interval),
+        datatype: datatype,
+        adjusted: adjusted
+      }
+
+      Client.get(datatype: validate_datatype(datatype), params: params)
     end
+
+    def intraday_extended_history(adjusted: true, outputsize: 'compact', interval: '5min', slice: 'year1month1')
+        params = {
+          function: FUNCTIONS[:intraday_extended_history],
+          symbol: @symbol,
+          slice: validate_slice(slice),
+          interval: validate_interval(interval),
+          adjusted: adjusted
+        }
+
+      Client.get(datatype: :csv, params: params)
+    end
+
   end
 end

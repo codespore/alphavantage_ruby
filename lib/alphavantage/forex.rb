@@ -2,7 +2,7 @@ module Alphavantage
   class Forex
     include Validations
 
-    FUNCTIONS = { 
+    FUNCTIONS = {
       exchange_rates: 'CURRENCY_EXCHANGE_RATE',
       intraday: 'FX_INTRADAY',
       daily: 'FX_DAILY',
@@ -16,7 +16,7 @@ module Alphavantage
     end
 
     def exchange_rates
-      Client.get(params: { 
+      Client.get(params: {
         function: FUNCTIONS[__method__],
         from_currency: @from_symbol,
         to_currency: @to_symbol
@@ -24,7 +24,7 @@ module Alphavantage
     end
 
     def intraday(interval: '5min', outputsize: 'compact')
-      Client.get(params: { 
+      Client.get(params: {
         function: FUNCTIONS[__method__],
         from_symbol: @from_symbol,
         to_symbol: @to_symbol,
@@ -34,16 +34,16 @@ module Alphavantage
     end
 
     def daily(outputsize: 'compact')
-      Client.get(params: { 
+      Client.get(params: {
         function: FUNCTIONS[__method__],
         from_symbol: @from_symbol,
         to_symbol: @to_symbol,
         outputsize: validate_outputsize(outputsize)
       })
     end
-  
+
     def weekly
-      Client.get(params: { 
+      Client.get(params: {
         function: FUNCTIONS[__callee__],
         from_symbol: @from_symbol,
         to_symbol: @to_symbol

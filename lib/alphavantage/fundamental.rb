@@ -1,6 +1,6 @@
 module Alphavantage
   class Fundamental
-    FUNCTIONS = { 
+    FUNCTIONS = {
       overview: 'OVERVIEW',
       earnings: 'EARNINGS',
       income_statement: 'INCOME_STATEMENT',

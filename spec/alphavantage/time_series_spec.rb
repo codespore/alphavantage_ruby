@@ -51,9 +51,9 @@ describe Alphavantage::TimeSeries do
       stub_request(:get, "https://www.alphavantage.co/query?apikey=someKey&function=TIME_SERIES_MONTHLY&symbol=TSLA").
         to_return(status: 200, body: file_fixture("time_series/monthly.json"), headers: {})
     end
-    
+
     it 'returns meta data' do
-      expect(subject.meta_data).to have_attributes({ 
+      expect(subject.meta_data).to have_attributes({
         information: "Monthly Prices (open, high, low, close) and Volumes",
         last_refreshed: "2021-04-23",
         symbol: "TSLA",
@@ -79,7 +79,7 @@ describe Alphavantage::TimeSeries do
       end
 
       it 'returns meta data' do
-        expect(subject.meta_data).to have_attributes({ 
+        expect(subject.meta_data).to have_attributes({
           information: "Monthly Adjusted Prices and Volumes",
           last_refreshed: "2021-04-23",
           symbol: "TSLA",
@@ -107,9 +107,9 @@ describe Alphavantage::TimeSeries do
       stub_request(:get, "https://www.alphavantage.co/query?apikey=someKey&function=TIME_SERIES_WEEKLY&symbol=TSLA").
         to_return(status: 200, body: file_fixture("time_series/weekly.json"), headers: {})
     end
-    
+
     it 'returns meta data' do
-      expect(subject.meta_data).to have_attributes({ 
+      expect(subject.meta_data).to have_attributes({
         information: "Weekly Prices (open, high, low, close) and Volumes",
         last_refreshed: "2021-04-23",
         symbol: "TSLA",
@@ -135,7 +135,7 @@ describe Alphavantage::TimeSeries do
       end
 
       it 'returns meta data' do
-        expect(subject.meta_data).to have_attributes({ 
+        expect(subject.meta_data).to have_attributes({
           information: "Weekly Adjusted Prices and Volumes",
           last_refreshed: "2021-04-23",
           symbol: "TSLA",
@@ -163,9 +163,9 @@ describe Alphavantage::TimeSeries do
       stub_request(:get, "https://www.alphavantage.co/query?apikey=someKey&function=TIME_SERIES_DAILY&outputsize=compact&symbol=TSLA").
         to_return(status: 200, body: file_fixture("time_series/daily.json"), headers: {})
     end
-    
+
     it 'returns meta data' do
-      expect(subject.meta_data).to have_attributes({ 
+      expect(subject.meta_data).to have_attributes({
         information: "Daily Prices (open, high, low, close) and Volumes",
         last_refreshed: "2021-04-23",
         symbol: "TSLA",
@@ -199,7 +199,7 @@ describe Alphavantage::TimeSeries do
       end
 
       it 'returns meta data' do
-        expect(subject.meta_data).to have_attributes({ 
+        expect(subject.meta_data).to have_attributes({
           information: "Daily Time Series with Splits and Dividend Events",
           last_refreshed: "2021-04-23",
           symbol: "TSLA",
@@ -224,44 +224,81 @@ describe Alphavantage::TimeSeries do
   end
 
   describe '#intraday' do
-    subject { described_class.new(symbol: 'TSLA').intraday }
+    context 'datatype: json' do
+      subject { described_class.new(symbol: 'TSLA').intraday }
+      before do
+        stub_request(:get, "https://www.alphavantage.co/query?adjusted=true&apikey=someKey&datatype=json&function=TIME_SERIES_INTRADAY&interval=5min&outputsize=compact&symbol=TSLA").
+          to_return(status: 200, body: file_fixture("time_series/intraday.json"), headers: {})
+      end
+
+      it 'returns meta data' do
+        expect(subject.meta_data).to have_attributes({
+          information: "Intraday (5min) open, high, low, close prices and volume",
+          last_refreshed: "2021-04-23 20:00:00",
+          symbol: "TSLA",
+          output_size: "Compact",
+          time_zone: "US/Eastern"
+        })
+      end
+
+      it 'returns daily time series' do
+        expect(subject.time_series_5min["2021-04-23 20:00:00"]).to have_attributes({
+          close: "730.1000",
+          high: "730.5000",
+          low: "730.1000",
+          volume: "5637"
+        })
+        expect(subject.time_series_5min["2021-04-23 20:00:00"].open).to eq("730.2500")
+      end
+
+      context 'when invalid outputsize given' do
+        subject { described_class.new(symbol: 'TSLA').intraday(outputsize: 'invalid') }
+        it 'should raise error' do
+          expect { subject }.to raise_error(Alphavantage::Error, "Invalid outputsize given.")
+        end
+      end
+
+      context 'when invalid interval given' do
+        subject { described_class.new(symbol: 'TSLA').intraday(interval: '100min') }
+        it 'should raise error' do
+          expect { subject }.to raise_error(Alphavantage::Error, "Invalid interval given.")
+        end
+      end
+
+      context 'when invalid datatype given' do
+        subject { described_class.new(symbol: 'TSLA').intraday(datatype: 'wrong') }
+        it 'should raise error' do
+          expect { subject }.to raise_error(Alphavantage::Error, "Invalid data type given.")
+        end
+      end
+    end
+
+    context 'datatype: csv' do
+      subject { described_class.new(symbol: 'TSLA').intraday datatype: 'csv' }
+
+      before do
+        stub_request(:get, "https://www.alphavantage.co/query?adjusted=true&apikey=someKey&datatype=csv&function=TIME_SERIES_INTRADAY&interval=5min&outputsize=compact&symbol=TSLA").
+          to_return(status: 200, body: file_fixture("time_series/intraday.csv"), headers: {})
+      end
+
+      # do not need to test further, cos we are testing out fixture
+      it 'returns CSV caption' do
+        expect(subject.first).to match_array %w[timestamp open high low close volume]
+      end
+    end
+  end
+
+  describe '#intraday_extended_history' do
+    subject { described_class.new(symbol: 'TSLA').intraday_extended_history }
+
     before do
-      stub_request(:get, "https://www.alphavantage.co/query?adjusted=true&apikey=someKey&function=TIME_SERIES_INTRADAY&interval=5min&outputsize=compact&symbol=TSLA").
-        to_return(status: 200, body: file_fixture("time_series/intraday.json"), headers: {})
+      stub_request(:get, "https://www.alphavantage.co/query?adjusted=true&apikey=someKey&function=TIME_SERIES_INTRADAY_EXTENDED&interval=5min&slice=year1month1&symbol=TSLA").
+        to_return(status: 200, body: file_fixture("time_series/intraday_extended_history.csv"), headers: {})
     end
 
-    it 'returns meta data' do
-      expect(subject.meta_data).to have_attributes({ 
-        information: "Intraday (5min) open, high, low, close prices and volume",
-        last_refreshed: "2021-04-23 20:00:00",
-        symbol: "TSLA",
-        output_size: "Compact",
-        time_zone: "US/Eastern"
-      })
-    end
-
-    it 'returns daily time series' do
-      expect(subject.time_series_5min["2021-04-23 20:00:00"]).to have_attributes({
-        close: "730.1000",
-        high: "730.5000",
-        low: "730.1000",
-        volume: "5637"
-      })
-      expect(subject.time_series_5min["2021-04-23 20:00:00"].open).to eq("730.2500")
-    end
-
-    context 'when invalid outputsize given' do
-      subject { described_class.new(symbol: 'TSLA').intraday(outputsize: 'invalid') }
-      it 'should raise error' do
-        expect { subject }.to raise_error(Alphavantage::Error, "Invalid outputsize given.")
-      end
-    end
-
-    context 'when invalid interval given' do
-      subject { described_class.new(symbol: 'TSLA').intraday(interval: '100min') }
-      it 'should raise error' do
-        expect { subject }.to raise_error(Alphavantage::Error, "Invalid interval given.")
-      end
+    # do not need to test further, cos we are testing out fixture
+    it 'returns CSV caption' do
+      expect(subject.first).to match_array %w[time open high low close volume]
     end
   end
 end

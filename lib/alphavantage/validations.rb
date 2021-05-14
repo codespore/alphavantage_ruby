@@ -10,6 +10,7 @@ module Alphavantage
     VALID_INDICATOR_INTERVALS = VALID_INTERVALS + %w{ daily weekly monthly }
     VALID_OUTPUTSIZES = %w{ compact full }
     VALID_SERIES_TYPE = %w{ close open high low }
+    VALID_DATA_TYPES = %w{ json csv }
 
     private
 
@@ -46,6 +47,11 @@ module Alphavantage
     def validate_mat(moving_average_type)
       raise Alphavantage::Error, "Invalid moving average type given." if !(0..8).include?(moving_average_type)
       moving_average_type
+    end
+
+    def validate_datatype(datatype)
+      raise Alphavantage::Error, "Invalid data type given." unless VALID_DATA_TYPES.include?(datatype)
+      datatype
     end
 
     def is_integer?(str)
