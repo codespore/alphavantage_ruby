@@ -17,11 +17,17 @@ module Alphavantage
     attr_reader :params
 
     def json
-      Hashie::Mash.new(convert_hash_keys(JSON.parse(response.body)))
+      Hashie::Mash.new(convert_hash_keys(JSON.parse(response.body))).tap do |response|
+        raise Error, response.error_message if response.error_message
+      end
     end
 
     def csv
       CSV.parse response.body
+    rescue CSV::MalformedCSVError
+      # if we can not parse it, we probably have JSON from API with an error
+      json
+      raise
     end
 
     private
@@ -38,8 +44,12 @@ module Alphavantage
     end
 
     def response
-      Faraday.get('https://www.alphavantage.co/query') do |req|
+      @response ||= Faraday.get('https://www.alphavantage.co/query') do |req|
         req.params = default_params.merge(params)
+      end.tap do |response|
+        next if response.status == 200
+
+        raise Error, "Response status: #{response.status}, body: #{response.body}"
       end
     end
 
