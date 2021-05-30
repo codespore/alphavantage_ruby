@@ -55,7 +55,7 @@ module Alphavantage
 
     def default_params
       {
-        apikey: Alphavantage.configuration.api_key || SecureRandom.alphanumeric(16).upcase
+        apikey: Alphavantage.configuration.api_key || raise("Api key is missing")
       }
     end
   end
