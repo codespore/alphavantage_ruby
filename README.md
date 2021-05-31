@@ -42,9 +42,9 @@ quote.volume         #=> "27879033"
 
 All hash keys are also normalized to provide clean and consistent access to values since the Alphavantage API returns arbitrarily formatted keys with numbers, spaces, letters and symbols (i.e. "Crypto Rating (FCAS)", "3. fcas rating", "4. Last Refreshed", "Time Series FX (5min)", "1a. open (CNY)")
 
-With this normalization, you can now access via 
+With this normalization, you can now access via
 
-`intraday.time_series_fx_5min` 
+`intraday.time_series_fx_5min`
 
 instead of
 
@@ -64,6 +64,7 @@ stock_timeseries.weekly(adjusted: true)
 stock_timeseries.daily(outputsize: 'compact')
 stock_timeseries.daily(adjusted: true, outputsize: 'full')
 stock_timeseries.intraday(adjusted: true, outputsize: 'compact', interval: '5min')
+stock_timeseries.intraday_extended_history(adjusted: true, outputsize: 'compact', interval: '5min', slice: 'year1month1')
 ```
 ### Fundamental Data
 ```
@@ -105,9 +106,9 @@ indicator.sma(time_period: 7, series_type: 'close')
 indicator.macd(series_type: 'open', fastperiod: 12, slowperiod: 26, signalperiod: 9)
 
 indicator.macdext(
-  series_type:, 
-  fastperiod: 12, 
-  slowperiod: 26, 
+  series_type:,
+  fastperiod: 12,
+  slowperiod: 26,
   signalperiod: 9,
   fastmatype: 'sma',
   slowmatype: 'sma',

@@ -8,7 +8,7 @@ module Alphavantage
     end
 
     def sma(time_period:,series_type:)
-      Client.get(params: { 
+      Client.get(params: {
         function: __callee__.upcase,
         symbol: @symbol,
         interval: validate_indicator_interval(@interval),
@@ -32,8 +32,8 @@ module Alphavantage
     alias :trix     :sma
     alias :midpoint :sma
 
-    def macd(series_type:, fastperiod: 12, slowperiod: 26, signalperiod: 9) 
-      Client.get(params: { 
+    def macd(series_type:, fastperiod: 12, slowperiod: 26, signalperiod: 9)
+      Client.get(params: {
         function: __callee__.upcase,
         symbol: @symbol,
         interval: validate_indicator_interval(@interval),
@@ -57,15 +57,15 @@ module Alphavantage
     }
 
     def macdext(
-      series_type:, 
-      fastperiod: 12, 
-      slowperiod: 26, 
+      series_type:,
+      fastperiod: 12,
+      slowperiod: 26,
       signalperiod: 9,
       fastmatype: 'sma',
       slowmatype: 'sma',
       signalmatype: 'sma'
     )
-      Client.get(params: { 
+      Client.get(params: {
         function: __callee__.upcase,
         symbol: @symbol,
         interval: validate_indicator_interval(@interval),
@@ -80,13 +80,13 @@ module Alphavantage
     end
 
     def stoch(
-      fastkperiod: 5, 
+      fastkperiod: 5,
       slowkperiod: 3,
       slowdperiod: 3,
       slowkmatype: 'sma',
       slowdmatype: 'sma'
     )
-      Client.get(params: { 
+      Client.get(params: {
         function: __callee__.upcase,
         symbol: @symbol,
         interval: validate_indicator_interval(@interval),
@@ -99,11 +99,11 @@ module Alphavantage
     end
 
     def stochf(
-      fastkperiod: 5, 
+      fastkperiod: 5,
       fastdperiod: 3,
       fastdmatype: 'sma'
     )
-      Client.get(params: { 
+      Client.get(params: {
         function: __callee__.upcase,
         symbol: @symbol,
         interval: validate_indicator_interval(@interval),
@@ -116,11 +116,11 @@ module Alphavantage
     def stochrsi(
       time_period:,
       series_type:,
-      fastkperiod: 5, 
+      fastkperiod: 5,
       fastdperiod: 3,
       fastdmatype: 'sma'
     )
-      Client.get(params: { 
+      Client.get(params: {
         function: __callee__.upcase,
         symbol: @symbol,
         interval: validate_indicator_interval(@interval),
@@ -133,7 +133,7 @@ module Alphavantage
     end
 
     def willr(time_period:)
-      Client.get(params: { 
+      Client.get(params: {
         function: __callee__.upcase,
         symbol: @symbol,
         interval: validate_indicator_interval(@interval),
@@ -155,7 +155,7 @@ module Alphavantage
     alias :natr     :willr
 
     def vwap
-      Client.get(params: { 
+      Client.get(params: {
         function: __callee__.upcase,
         symbol: @symbol,
         interval: [:bop,:trange,:ad,:obv].include?(__callee__) ? validate_indicator_interval(@interval) : validate_interval(@interval)
@@ -166,8 +166,8 @@ module Alphavantage
     alias :ad      :vwap
     alias :obv     :vwap
 
-    def adosc(fastperiod: 3, slowperiod: 10) 
-      Client.get(params: { 
+    def adosc(fastperiod: 3, slowperiod: 10)
+      Client.get(params: {
         function: __callee__.upcase,
         symbol: @symbol,
         interval: validate_indicator_interval(@interval),
@@ -177,7 +177,7 @@ module Alphavantage
     end
 
     def ht_trendline(series_type:)
-      Client.get(params: { 
+      Client.get(params: {
         function: __callee__.upcase,
         symbol: @symbol,
         interval: validate_indicator_interval(@interval),
@@ -190,8 +190,8 @@ module Alphavantage
     alias :ht_dcphase   :ht_trendline
     alias :ht_phasor    :ht_trendline
 
-    def apo(series_type:, fastperiod: 12, slowperiod: 26, matype: 'sma') 
-      Client.get(params: { 
+    def apo(series_type:, fastperiod: 12, slowperiod: 26, matype: 'sma')
+      Client.get(params: {
         function: __callee__.upcase,
         symbol: @symbol,
         interval: validate_indicator_interval(@interval),
@@ -203,8 +203,8 @@ module Alphavantage
     end
     alias :ppo :apo
 
-    def bbands(time_period:, series_type:, nbdevup: 2, nbdevdn: 2, matype: 'sma') 
-      Client.get(params: { 
+    def bbands(time_period:, series_type:, nbdevup: 2, nbdevdn: 2, matype: 'sma')
+      Client.get(params: {
         function: __callee__.upcase,
         symbol: @symbol,
         interval: validate_indicator_interval(@interval),
@@ -216,8 +216,8 @@ module Alphavantage
       })
     end
 
-    def sar(acceleration: 0.01, maximum: 0.20) 
-      Client.get(params: { 
+    def sar(acceleration: 0.01, maximum: 0.20)
+      Client.get(params: {
         function: __callee__.upcase,
         symbol: @symbol,
         interval: validate_indicator_interval(@interval),
@@ -226,8 +226,8 @@ module Alphavantage
       })
     end
 
-    def ultosc(timeperiod1: 7, timeperiod2: 14, timeperiod3: 28) 
-      Client.get(params: { 
+    def ultosc(timeperiod1: 7, timeperiod2: 14, timeperiod3: 28)
+      Client.get(params: {
         function: __callee__.upcase,
         symbol: @symbol,
         interval: validate_indicator_interval(@interval),

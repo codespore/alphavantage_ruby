@@ -11,7 +11,7 @@ module Alphavantage
     }
 
     def self.health_index(symbol:)
-      Client.get(params: { 
+      Client.get(params: {
         function: self::FUNCTIONS[__method__],
         symbol: symbol
       }).crypto_rating_fcas
@@ -23,7 +23,7 @@ module Alphavantage
     end
 
     def intraday(interval: '5min')
-      Client.get(params: { 
+      Client.get(params: {
         function: FUNCTIONS[__method__],
         symbol: @symbol,
         market: @market,
@@ -32,7 +32,7 @@ module Alphavantage
     end
 
     def daily
-      Client.get(params: { 
+      Client.get(params: {
         function: FUNCTIONS[__callee__],
         symbol: @symbol,
         market: @market
