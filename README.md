@@ -24,7 +24,7 @@ Or install it yourself as:
 The library needs to be configured with your account's api key which you can obtain from https://www.alphavantage.co/support/#api-key.
 Set the `Alphavantage.configuration.api_key` to its value. If you are using Rails, you can configure this in an initializer.
 
-```
+```ruby
 require 'alphavantage'
 
 Alphavantage.configure do |config|
@@ -34,7 +34,7 @@ end
 
 ### Accessing a response object
 All JSON responses are converted to pseudo-objects that have method-like accessors for hash keys
-```
+```ruby
 quote = Alphavantage::TimeSeries.new(symbol: 'TSLA').quote
 quote.previous_close #=> "719.6900"
 quote.volume         #=> "27879033"
@@ -52,7 +52,7 @@ instead of
 
 ### Stock Time Series
 
-```
+```ruby
 Alphavantage::TimeSeries.search(keywords: 'Tesla')
 
 stock_timeseries = Alphavantage::TimeSeries.new(symbol: 'TSLA')
@@ -67,7 +67,7 @@ stock_timeseries.intraday(adjusted: true, outputsize: 'compact', interval: '5min
 stock_timeseries.intraday_extended_history(adjusted: true, outputsize: 'compact', interval: '5min', slice: 'year1month1')
 ```
 ### Fundamental Data
-```
+```ruby
 company = Alphavantage::Fundamental.new(symbol: 'TSLA')
 company.overview
 company.earnings
@@ -76,7 +76,7 @@ company.balance_sheet
 company.cash_flow
 ```
 ### Forex
-```
+```ruby
 forex = Alphavantage::Forex.new(from_symbol: 'USD', to_symbol: 'JPY')
 forex.exchange_rates
 forex.intraday(interval: '5min', outputsize: 'compact')
@@ -85,7 +85,7 @@ forex.weekly
 forex.monthly
 ```
 ### Crypto Currencies
-```
+```ruby
 Alphavantage::Crypto.health_index(symbol: 'BTC')
 
 crypto = Alphavantage::Crypto.new(symbol: 'BTC', market: 'USD')
@@ -100,7 +100,7 @@ You can access all available indicators by simply using the actual technical ind
 
 You can also dig into [alphavantage/indicator.rb](https://github.com/codespore/alphavantage_ruby/blob/main/lib/alphavantage/indicator.rb) to view the list of available indicators.
 
-```
+```ruby
 indicator = Alphavantage::Indicator.new(symbol: 'TSLA', interval: '5min')
 indicator.sma(time_period: 7, series_type: 'close')
 indicator.macd(series_type: 'open', fastperiod: 12, slowperiod: 26, signalperiod: 9)
@@ -118,7 +118,7 @@ indicator.macdext(
 
 Moving average indicator as parameters have been mapped to allow you to simply provide the actual indicator name rather than the number value specified in the Alpha Vantage Documentation. Below is the mapping available that I've used in the above `.macdext` example for the `fastmatype`, `slowmatype` and `signalmatype` parameters
 
-```
+```ruby
 MOVING_AVERAGE_TYPES = {
   sma: 0,
   ema: 1,
@@ -133,6 +133,22 @@ MOVING_AVERAGE_TYPES = {
 ```
 
 Validations are also implemented to ensure correct values are provided for the various parameters. You can view a list of the validations in [alphavantage/validations.rb](https://github.com/codespore/alphavantage_ruby/blob/main/lib/alphavantage/validations.rb)
+
+### Other Functions
+
+To get functions not implemented in the gem you can use the `Alphavantage::Client` class:
+
+If you want to get the news sentiments:
+
+```ruby
+Alphavantage::Client.new(function: 'NEWS_SENTIMENT').json
+```
+
+If you want to get the list of all listed US stocks and ETFs (Only supports CSV):
+
+```ruby
+Alphavantage::Client.new(function: 'LISTING_STATUS').csv
+```
 
 ## Development
 
