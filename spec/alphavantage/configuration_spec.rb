@@ -10,4 +10,22 @@ describe Alphavantage::Configuration do
 
     expect(Alphavantage.configuration.api_key).to eq('someKey')
   end
+
+  # Why is this important? Because some API keys are rate limited.  Having
+  # a proc as an api_key allows the user to inject an API Key Manager
+  # or rate limiter process.
+  #
+  it "should support a Proc as an api_key" do
+    Alphavantage.configure do |config|
+      config.api_key = -> { Time.now }
+    end
+
+    key1 = Alphavantage.configuration.api_key
+    sleep(1)
+    key2 = Alphavantage.configuration.api_key
+
+    expect(key1.class).to   eq(Time)
+    expect(key2.class).to   eq(Time)
+    expect(key1 < Key2).to  be(true)
+  end
 end
