@@ -11,8 +11,8 @@ describe Alphavantage::Configuration do
     expect(Alphavantage.configuration.api_key).to eq('someKey')
   end
 
-  # Why is this important?  Because some API keys are rate limited.  Having
-  # a Oroc as an api_key allows the user to inject an API Key Manager
+  # Why is this important? Because some API keys are rate limited.  Having
+  # a proc as an api_key allows the user to inject an API Key Manager
   # or rate limiter process.
   #
   it "should support a Proc as an api_key" do
